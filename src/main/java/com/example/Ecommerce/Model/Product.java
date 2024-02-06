@@ -1,5 +1,7 @@
 package com.example.Ecommerce.Model;
 
+
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,5 +29,5 @@ public class Product {
     private String category;
 
     @Column(name = "product_mfd")
-    private Date mfd;
+    private String mfd;
 }

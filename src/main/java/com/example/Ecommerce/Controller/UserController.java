@@ -4,10 +4,11 @@ import com.example.Ecommerce.Model.User;
 import com.example.Ecommerce.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.plaf.PanelUI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -37,9 +38,21 @@ public class UserController {
         List<User> users = userServ.getallusers();
         return users;
     }
-    @PutMapping("/update")
-    public User updateUser(@RequestBody User user) {
-        User updatedUser = userServ.updateuser(user);
+    @PutMapping("/update/")
+    public Optional<User> updateUser(@RequestBody User user) {
+        Optional<User> updatedUser = userServ.updateuser(user);
         return updatedUser;
     }
+    @PostMapping("/exists/email")
+    public Boolean emailExists(@RequestBody User user){
+        String userEmail = user.getEmail();
+        return userServ.existByEmail(userEmail);
+    }
+    @PostMapping("/login")
+    public String loginUser(@RequestBody User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+        return userServ.userLogin(email, password);
+    }
+
 }
